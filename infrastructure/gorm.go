@@ -23,6 +23,10 @@ func InitDB() *gorm.DB {
 	return db
 }
 
+func (handler *DBHandler) Find(out interface{}, where ...interface{}) *gorm.DB {
+	return handler.DB.Find(out, where...)
+}
+
 func newGorm() *gorm.DB {
 	driver := config.Mysql{
 		Host:     config.GetEnvWithDefautl("DB_HOST", "db"),
@@ -61,11 +65,11 @@ func autoMigrate(db *gorm.DB) error {
 	err := db.AutoMigrate(
 		new(domain.Department),
 		new(domain.EmploymentStatus),
+		new(domain.Status),
 		new(domain.Member),
 		new(domain.MemberDepartment),
 		new(domain.MemberRole),
 		new(domain.Role),
-		new(domain.Status),
 	)
 	return err
 }
