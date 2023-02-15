@@ -20,6 +20,8 @@ services:
     ports:
       - 3306:3306
     environment:
+      MYSQL_USER: emoshu_user
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: emoshu_practice_dev
     volumes:
