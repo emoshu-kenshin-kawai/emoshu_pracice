@@ -4,6 +4,8 @@ import "gorm.io/gorm"
 
 type MemberDepartment struct {
 	gorm.Model
-	Member     Member
-	Department Department
+	MemberID     uint
+	Member       Member
+	DepartmentID uint
+	Department   Department
 }
