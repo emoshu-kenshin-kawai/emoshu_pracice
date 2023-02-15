@@ -2,6 +2,7 @@ package infrastructure
 
 import (
 	"emoshu_practice/config"
+	"emoshu_practice/domain"
 	"fmt"
 	"time"
 
@@ -9,14 +10,13 @@ import (
 	"gorm.io/gorm"
 )
 
-type GormHandler struct {
-	Db *gorm.DB
-}
-
-func InitDB() {
+func InitDB() *gorm.DB {
 	db := newGorm()
-	fmt.Println(db)
-
+	err := autoMigrate(db)
+	if err != nil {
+		panic(err)
+	}
+	return db
 }
 
 func newGorm() *gorm.DB {
@@ -44,11 +44,24 @@ func openDBWithTimeLimit(dsn string, count int) (*gorm.DB, error) {
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		if count == 0 {
-			return nil, fmt.Errorf("Retry count over")
+			return nil, fmt.Errorf("retry count over")
 		}
 		time.Sleep(time.Second)
 		count--
 		return openDBWithTimeLimit(dsn, count)
 	}
 	return db, nil
+}
+
+func autoMigrate(db *gorm.DB) error {
+	err := db.AutoMigrate(
+		new(domain.Department),
+		new(domain.EmploymentStatus),
+		new(domain.Member),
+		new(domain.MemberDepartment),
+		new(domain.MemberRole),
+		new(domain.Role),
+		new(domain.Status),
+	)
+	return err
 }
