@@ -10,6 +10,10 @@ import (
 	"gorm.io/gorm"
 )
 
+type DBHandler struct {
+	DB *gorm.DB
+}
+
 func InitDB() *gorm.DB {
 	db := newGorm()
 	err := autoMigrate(db)
@@ -23,7 +27,7 @@ func newGorm() *gorm.DB {
 	driver := config.Mysql{
 		Host:     config.GetEnvWithDefautl("DB_HOST", "db"),
 		Port:     config.GetEnvWithDefautl("DB_PORT", "3306"),
-		UserName: config.GetEnvWithDefautl("DB_USER", "root"),
+		UserName: config.GetEnvWithDefautl("DB_USER", "emoshu_user"),
 		Password: config.GetEnvWithDefautl("DB_PASSWORD", "password"),
 		DBName:   config.GetEnvWithDefautl("DB_NAME", "emoshu_practice_dev"),
 	}
