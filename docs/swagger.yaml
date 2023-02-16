@@ -1,0 +1,102 @@
+definitions:
+  domain.EmploymentStatus:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      employmentStatus:
+        type: string
+      id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  domain.Member:
+    properties:
+      biography:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      employmentStatus:
+        $ref: '#/definitions/domain.EmploymentStatus'
+      employmentStatusID:
+        type: integer
+      endDate:
+        type: string
+      fullName:
+        type: string
+      id:
+        type: integer
+      kanaName:
+        type: string
+      motto:
+        type: string
+      "no":
+        type: string
+      profileImg:
+        type: string
+      startDate:
+        type: string
+      status:
+        $ref: '#/definitions/domain.Status'
+      statusID:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  domain.Status:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      status:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+info:
+  contact: {}
+  title: EmoshU practice
+  version: "1.0"
+paths:
+  /api/member/{id}:
+    get:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Member'
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Show
+      tags:
+      - Member
+swagger: "2.0"

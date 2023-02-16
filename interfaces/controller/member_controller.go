@@ -5,7 +5,8 @@ import (
 	"emoshu_practice/usecase"
 	"errors"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
+	_ "github.com/swaggo/echo-swagger/example/docs"
 	"gorm.io/gorm"
 )
 
@@ -23,6 +24,15 @@ func NewMemberController(db database.DBHandler) *MemberController {
 	}
 }
 
+// Show godoc
+// @Summary  Show
+// @Tags     Member
+// @Produce  json
+// @Param id path string true "ID"
+// @Success 200 {object} domain.Member
+// @Failure 404 {string} string
+// @Failure 500 {string} string
+// @Router   /api/member/{id} [get]
 func (controller *MemberController) Show(c echo.Context) error {
 	member, err := controller.MemberInteractor.GetMemberById(c.Param("id"))
 	if err != nil {
