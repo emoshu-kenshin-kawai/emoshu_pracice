@@ -1,3 +1,4 @@
 insert into members(no,profile_img,full_name,kana_name) values("1", "profile_url","full name","full name")
 insert into employment_statuses(employment_status) values("")
 
+insert into statuses(status) values("in-office")
