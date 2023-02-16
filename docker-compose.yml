@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    ports: 
+      - 3000:3000
+    depends_on:
+      - db
+    volumes: 
+      - .:/go/src/app
+
+  db:
+    image: mysql:8.0
+    tty: true
+    container_name: db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_USER: emoshu_user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: emoshu_practice_dev
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes: 
+  db-data:
