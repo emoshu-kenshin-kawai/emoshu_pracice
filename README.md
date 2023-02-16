@@ -6,3 +6,9 @@
 docker-compose build
 docker-compose up
 ```
+
+### Swagger初期化
+
+```
+swag init --parseDependency --parseInternal
+```
