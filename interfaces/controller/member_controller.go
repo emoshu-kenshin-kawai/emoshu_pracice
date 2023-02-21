@@ -6,7 +6,6 @@ import (
 	"errors"
 
 	"github.com/labstack/echo/v4"
-	_ "github.com/swaggo/echo-swagger/example/docs"
 	"gorm.io/gorm"
 )
 
