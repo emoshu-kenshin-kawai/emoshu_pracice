@@ -6,8 +6,8 @@ import (
 
 type Member struct {
 	ID                 uint             `gorm:"primarykey" json:"id"`
-	CreatedAt          time.Time        `json:"created_at"`
-	UpdatedAt          time.Time        `json:"updated_at"`
+	CreatedAt          time.Time        `gorm:"autoCreateTime:milli" json:"created_at"`
+	UpdatedAt          time.Time        `gorm:"autoUpdateTime:milli" json:"updated_at"`
 	No                 string           `json:"no"`
 	ProfileImg         string           `gorm:"not null" json:"profile_img"`
 	FullName           string           `gorm:"not null" json:"full_name"`
