@@ -8,4 +8,5 @@ type DBHandler interface {
 	Find(interface{}, ...interface{}) *gorm.DB
 	First(interface{}, ...interface{}) *gorm.DB
 	Joins(string, ...interface{}) *gorm.DB
+	Create(interface{}) *gorm.DB
 }

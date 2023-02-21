@@ -15,3 +15,8 @@ func (interactor *MemberInteractor) GetMemberById(id string) (domain.Member, err
 	member, err := interactor.FindById(id)
 	return member, err
 }
+
+func (interactor *MemberInteractor) CreateMember(member domain.Member) error {
+	err := interactor.New(member)
+	return err
+}

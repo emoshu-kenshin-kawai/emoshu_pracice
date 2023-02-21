@@ -21,3 +21,10 @@ func (repo *MemberRepository) FindById(id string) (member domain.Member, err err
 	}
 	return member, nil
 }
+
+func (repo *MemberRepository) New(m domain.Member) (err error) {
+	if err = repo.Create(&m).Error; err != nil {
+		return err
+	}
+	return nil
+}
