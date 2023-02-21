@@ -1,8 +1,10 @@
 package domain
 
-import "gorm.io/gorm"
+import "time"
 
 type Role struct {
-	gorm.Model
-	Role string `gorm:"not null"`
+	ID        uint      `gorm:"primarykey" json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	Role      string    `gorm:"not null" json:"role"`
 }

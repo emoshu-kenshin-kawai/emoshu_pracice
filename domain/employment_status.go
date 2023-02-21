@@ -1,8 +1,10 @@
 package domain
 
-import "gorm.io/gorm"
+import "time"
 
 type EmploymentStatus struct {
-	gorm.Model
-	EmploymentStatus string `gorm:"not null"`
+	ID               uint      `gorm:"primarykey" json:"id"`
+	CreatedAt        time.Time `json:"created_at"`
+	UpdatedAt        time.Time `json:"updated_at"`
+	EmploymentStatus string    `gorm:"not null" json:"employment_status"`
 }

@@ -1,11 +1,13 @@
 package domain
 
-import "gorm.io/gorm"
+import "time"
 
 type MemberDepartment struct {
-	gorm.Model
-	MemberID     uint
-	Member       Member
-	DepartmentID uint
-	Department   Department
+	ID           uint       `gorm:"primarykey" json:"id"`
+	CreatedAt    time.Time  `json:"created_at"`
+	UpdatedAt    time.Time  `json:"updated_at"`
+	MemberID     uint       `json:"member_id"`
+	Member       Member     `json:"member"`
+	DepartmentID uint       `json:"department_id"`
+	Department   Department `json:"department"`
 }
