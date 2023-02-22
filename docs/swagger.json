@@ -74,6 +74,12 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Emoployment End Date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
                         "type": "integer",
                         "description": "Employment Status",
                         "name": "employment_status_id",
