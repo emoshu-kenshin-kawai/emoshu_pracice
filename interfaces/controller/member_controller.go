@@ -119,7 +119,8 @@ func (controller *MemberController) Update(c echo.Context) error {
 	}
 	memberId, _ := strconv.Atoi(c.Param("id"))
 	member.ID = uint(memberId)
-	err := controller.MemberInteractor.UpdateMember(member)
+	newMember, err := controller.MemberInteractor.UpdateMember(member)
+	member = newMember
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			c.JSON(404, NewError(404, err))

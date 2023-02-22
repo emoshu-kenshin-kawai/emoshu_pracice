@@ -29,8 +29,8 @@ func (repo *MemberRepository) New(m domain.Member) (domain.Member, error) {
 	return m, nil
 }
 
-func (repo *MemberRepository) Update(m domain.Member) (err error) {
-	if err = repo.Model(&domain.Member{}).Where("id = ?", m.ID).Updates(map[string]interface{}{
+func (repo *MemberRepository) Update(m domain.Member) (domain.Member, error) {
+	if err := repo.Model(&domain.Member{}).Where("id = ?", m.ID).Updates(map[string]interface{}{
 		"No":                 m.No,
 		"ProfileImg":         m.ProfileImg,
 		"FullName":           m.FullName,
@@ -42,7 +42,10 @@ func (repo *MemberRepository) Update(m domain.Member) (err error) {
 		"EmploymentStatusID": m.EmploymentStatusID,
 		"StatusID":           m.StatusID,
 	}).Error; err != nil {
-		return err
+		return m, err
 	}
-	return nil
+	if err := repo.Joins("EmploymentStatus").Joins("Status").First(&m, m.ID).Error; err != nil {
+		return m, err
+	}
+	return m, nil
 }

@@ -21,7 +21,7 @@ func (interactor *MemberInteractor) CreateMember(member domain.Member) (domain.M
 	return member, err
 }
 
-func (interactor *MemberInteractor) UpdateMember(member domain.Member) error {
-	err := interactor.Update(member)
-	return err
+func (interactor *MemberInteractor) UpdateMember(member domain.Member) (domain.Member, error) {
+	member, err := interactor.Update(member)
+	return member, err
 }
