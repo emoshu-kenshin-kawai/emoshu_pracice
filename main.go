@@ -1,7 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"emoshu_practice/infrastructure"
+	"fmt"
+)
 
 func main() {
-	fmt.Println("hello")
+	infrastructure.InitDB()
+	fmt.Println("heldddlo")
 }
