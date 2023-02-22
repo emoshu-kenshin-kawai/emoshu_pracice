@@ -5,6 +5,7 @@ import (
 	"emoshu_practice/interfaces/database"
 	"emoshu_practice/usecase"
 	"errors"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -86,6 +87,43 @@ func (controller *MemberController) Create(c echo.Context) error {
 	}
 	err := controller.MemberInteractor.CreateMember(member)
 	if err != nil {
+		c.JSON(500, NewError(500, err))
+		return nil
+	}
+	c.JSON(201, member)
+	return nil
+}
+
+// Update godoc
+// @Summary  Update
+// @Tags     Member
+// @Produce  json
+// @Param id path string true "ID"
+// @Param no query string true "Employee Number"
+// @Param full_name query string false "Full Name"
+// @Param profile_img query string true "Profile Image"
+// @Param kana_name query string false "Kana Name"
+// @Param start_date query string true "Employment Start Date"
+// @Param end_date query string true "Emoployment End Date"
+// @Param employment_status_id query uint false "Employment Status"
+// @Param status_id query uint false "Status"
+// @Success 201 {object} domain.Member
+// @Failure 404 {object} Error
+// @Failure 500 {object} Error
+// @Router   /api/member/{id} [put]
+func (controller *MemberController) Update(c echo.Context) error {
+	member := domain.Member{}
+	if err := c.Bind(&member); err != nil {
+		c.JSON(500, NewError(500, err))
+	}
+	memberId, _ := strconv.Atoi(c.Param("id"))
+	member.ID = uint(memberId)
+	err := controller.MemberInteractor.UpdateMember(member)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			c.JSON(404, NewError(404, err))
+			return nil
+		}
 		c.JSON(500, NewError(500, err))
 		return nil
 	}

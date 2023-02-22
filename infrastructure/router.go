@@ -25,6 +25,8 @@ func init() {
 
 	e.GET("/api/members", memberController.Index)
 	e.GET("/api/members/:id", memberController.Show)
+	e.POST("/api/member", memberController.Create)
+	e.PUT("/api/member/:id", memberController.Update)
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	e.Logger.Fatal(e.Start(":3000"))

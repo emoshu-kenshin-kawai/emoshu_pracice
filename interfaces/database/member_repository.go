@@ -28,3 +28,21 @@ func (repo *MemberRepository) New(m domain.Member) (err error) {
 	}
 	return nil
 }
+
+func (repo *MemberRepository) Update(m domain.Member) (err error) {
+	if err = repo.Model(&domain.Member{}).Where("id = ?", m.ID).Updates(map[string]interface{}{
+		"No":                 m.No,
+		"ProfileImg":         m.ProfileImg,
+		"FullName":           m.FullName,
+		"KanaName":           m.KanaName,
+		"Motto":              m.Motto,
+		"Biography":          m.Biography,
+		"StartDate":          m.StartDate,
+		"EndDate":            m.EndDate,
+		"EmploymentStatusID": m.EmploymentStatusID,
+		"StatusID":           m.StatusID,
+	}).Error; err != nil {
+		return err
+	}
+	return nil
+}

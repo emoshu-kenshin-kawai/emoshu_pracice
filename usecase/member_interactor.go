@@ -20,3 +20,8 @@ func (interactor *MemberInteractor) CreateMember(member domain.Member) error {
 	err := interactor.New(member)
 	return err
 }
+
+func (interactor *MemberInteractor) UpdateMember(member domain.Member) error {
+	err := interactor.Update(member)
+	return err
+}
