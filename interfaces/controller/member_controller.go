@@ -79,7 +79,7 @@ func (controller *MemberController) Show(c echo.Context) error {
 // @Param status_id query uint false "Status"
 // @Success 201 {object} domain.Member
 // @Failure 500 {object} Error
-// @Router   /api/member [post]
+// @Router   /api/members [post]
 func (controller *MemberController) Create(c echo.Context) error {
 	member := domain.Member{}
 	if err := c.Bind(&member); err != nil {
@@ -110,7 +110,7 @@ func (controller *MemberController) Create(c echo.Context) error {
 // @Success 201 {object} domain.Member
 // @Failure 404 {object} Error
 // @Failure 500 {object} Error
-// @Router   /api/member/{id} [put]
+// @Router   /api/members/{id} [put]
 func (controller *MemberController) Update(c echo.Context) error {
 	member := domain.Member{}
 	if err := c.Bind(&member); err != nil {

@@ -66,7 +66,24 @@ info:
   version: "1.0"
   title: "emoshu practice"
 paths:
-  /api/member:
+  /api/members:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Member'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Error'
+      summary: Index
+      tags:
+      - Members
     post:
       parameters:
       - description: Employee Number
@@ -119,7 +136,32 @@ paths:
       summary: Create
       tags:
       - Member
-  /api/member/{id}:
+  /api/members/{id}:
+    get:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Member'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Error'
+      summary: Show
+      tags:
+      - Member
     put:
       parameters:
       - description: ID
@@ -179,50 +221,6 @@ paths:
           schema:
             $ref: '#/definitions/controller.Error'
       summary: Update
-      tags:
-      - Member
-  /api/members:
-    get:
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/domain.Member'
-            type: array
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/controller.Error'
-      summary: Index
-      tags:
-      - Members
-  /api/members/{id}:
-    get:
-      parameters:
-      - description: ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/domain.Member'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/controller.Error'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/controller.Error'
-      summary: Show
       tags:
       - Member
 swagger: "2.0"
