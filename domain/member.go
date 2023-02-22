@@ -15,7 +15,7 @@ type Member struct {
 	Motto              string           `json:"motto"`
 	Biography          string           `json:"biography"`
 	StartDate          time.Time        `json:"start_date"`
-	EndDate            time.Time        `json:"end_date"`
+	EndDate            *time.Time       `json:"end_date"`
 	EmploymentStatusID uint             `json:"employment_status_id"`
 	EmploymentStatus   EmploymentStatus `json:"employment_status"`
 	StatusID           uint             `json:"status_id"`

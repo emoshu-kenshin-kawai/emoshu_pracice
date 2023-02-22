@@ -85,13 +85,6 @@ const docTemplate = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "Emoployment End Date",
-                        "name": "end_date",
-                        "in": "query",
-                        "required": true
-                    },
-                    {
                         "type": "integer",
                         "description": "Employment Status",
                         "name": "employment_status_id",

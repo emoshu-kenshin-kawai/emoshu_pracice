@@ -74,7 +74,6 @@ func (controller *MemberController) Show(c echo.Context) error {
 // @Param profile_img query string true "Profile Image"
 // @Param kana_name query string false "Kana Name"
 // @Param start_date query string true "Employment Start Date"
-// @Param end_date query string true "Emoployment End Date"
 // @Param employment_status_id query uint false "Employment Status"
 // @Param status_id query uint false "Status"
 // @Success 201 {object} domain.Member
