@@ -4,7 +4,7 @@
         "contact": {}
     },
     "paths": {
-        "/api/member/{id}": {
+        "/api/members/{id}": {
             "get": {
                 "produces": [
                     "application/json"

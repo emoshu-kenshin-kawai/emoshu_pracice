@@ -73,7 +73,7 @@ info:
   title: EmoshU practice
   version: "1.0"
 paths:
-  /api/member/{id}:
+  /api/members/{id}:
     get:
       parameters:
       - description: ID

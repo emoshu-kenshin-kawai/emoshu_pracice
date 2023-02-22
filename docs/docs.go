@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/member/{id}": {
+        "/api/members/{id}": {
             "get": {
                 "produces": [
                     "application/json"
