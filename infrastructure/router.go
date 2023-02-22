@@ -23,6 +23,7 @@ func init() {
 	e.Use(middleware.Recover())
 	memberController := controller.NewMemberController(InitDB())
 
+	e.GET("/api/members", memberController.Index)
 	e.GET("/api/members/:id", memberController.Show)
 	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
