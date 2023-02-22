@@ -136,6 +136,27 @@ paths:
       tags:
       - Member
   /api/members/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Member'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Error'
+      summary: Delete
+      tags:
+      - Member
     get:
       parameters:
       - description: ID

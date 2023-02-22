@@ -132,3 +132,29 @@ func (controller *MemberController) Update(c echo.Context) error {
 	c.JSON(201, member)
 	return nil
 }
+
+// Delete godoc
+// @Summary  Delete
+// @Tags     Member
+// @Produce  json
+// @Param id path string true "ID"
+// @Success 200 {object} domain.Member
+// @Failure 500 {object} Error
+// @Router   /api/members/{id} [delete]
+func (controller *MemberController) Delete(c echo.Context) error {
+	memberId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(500, NewError(500, err))
+		return nil
+	}
+	member := domain.Member{
+		ID: uint(memberId),
+	}
+	err = controller.MemberInteractor.DeleteMemberById(member)
+	if err != nil {
+		c.JSON(500, NewError(500, err))
+		return nil
+	}
+	c.JSON(200, member)
+	return nil
+}

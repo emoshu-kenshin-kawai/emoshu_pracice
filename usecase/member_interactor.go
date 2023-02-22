@@ -25,3 +25,8 @@ func (interactor *MemberInteractor) UpdateMember(member domain.Member) (domain.M
 	member, err := interactor.Update(member)
 	return member, err
 }
+
+func (interactor *MemberInteractor) DeleteMemberById(member domain.Member) error {
+	err := interactor.MemberRepository.DeleteById(member)
+	return err
+}

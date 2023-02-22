@@ -7,4 +7,5 @@ type MemberRepository interface {
 	FindAll() ([]domain.Member, error)
 	New(member domain.Member) (domain.Member, error)
 	Update(member domain.Member) (domain.Member, error)
+	DeleteById(domain.Member) error
 }

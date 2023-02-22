@@ -2,6 +2,7 @@ package database
 
 import (
 	"emoshu_practice/domain"
+	"fmt"
 )
 
 type MemberRepository struct {
@@ -48,4 +49,14 @@ func (repo *MemberRepository) Update(m domain.Member) (domain.Member, error) {
 		return m, err
 	}
 	return m, nil
+}
+
+func (repo *MemberRepository) DeleteById(m domain.Member) error {
+	result := repo.Delete(&m)
+	if result.Error != nil {
+		return result.Error
+	} else if result.RowsAffected < 1 {
+		return fmt.Errorf("row with id=%d cannot be deleted because it doesn't exist", m.ID)
+	}
+	return nil
 }

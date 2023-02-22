@@ -13,4 +13,5 @@ type DBHandler interface {
 	Model(interface{}) *gorm.DB
 	Updates(interface{}) *gorm.DB
 	Where(interface{}, ...interface{}) *gorm.DB
+	Delete(interface{}, ...interface{}) *gorm.DB
 }
