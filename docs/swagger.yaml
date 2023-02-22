@@ -8,79 +8,155 @@ definitions:
     type: object
   domain.EmploymentStatus:
     properties:
-      createdAt:
+      created_at:
         type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      employmentStatus:
+      employment_status:
         type: string
       id:
         type: integer
-      updatedAt:
+      updated_at:
         type: string
     type: object
   domain.Member:
     properties:
       biography:
         type: string
-      createdAt:
+      created_at:
         type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      employmentStatus:
+      employment_status:
         $ref: '#/definitions/domain.EmploymentStatus'
-      employmentStatusID:
+      employment_status_id:
         type: integer
-      endDate:
+      end_date:
         type: string
-      fullName:
+      full_name:
         type: string
       id:
         type: integer
-      kanaName:
+      kana_name:
         type: string
       motto:
         type: string
       "no":
         type: string
-      profileImg:
+      profile_img:
         type: string
-      startDate:
+      start_date:
         type: string
       status:
         $ref: '#/definitions/domain.Status'
-      statusID:
+      status_id:
         type: integer
-      updatedAt:
+      updated_at:
         type: string
     type: object
   domain.Status:
     properties:
-      createdAt:
+      created_at:
         type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
       id:
         type: integer
       status:
         type: string
-      updatedAt:
+      updated_at:
         type: string
-    type: object
-  gorm.DeletedAt:
-    properties:
-      time:
-        type: string
-      valid:
-        description: Valid is true if Time is not NULL
-        type: boolean
     type: object
 info:
   contact: {}
-  title: EmoshU practice
   version: "1.0"
+  title: "emoshu practice"
 paths:
+  /api/members:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/domain.Member'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Error'
+      summary: Index
+      tags:
+      - Members
+    post:
+      parameters:
+      - description: Employee Number
+        in: query
+        name: "no"
+        required: true
+        type: string
+      - description: Full Name
+        in: query
+        name: full_name
+        type: string
+      - description: Profile Image
+        in: query
+        name: profile_img
+        required: true
+        type: string
+      - description: Kana Name
+        in: query
+        name: kana_name
+        type: string
+      - description: Employment Start Date
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: Emoployment End Date
+        in: query
+        name: end_date
+        type: string
+      - description: Employment Status
+        in: query
+        name: employment_status_id
+        type: integer
+      - description: Status
+        in: query
+        name: status_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Member'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Error'
+      summary: Create
+      tags:
+      - Member
   /api/members/{id}:
+    delete:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Member'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/controller.Error'
+      summary: Delete
+      tags:
+      - Member
     get:
       parameters:
       - description: ID
@@ -106,22 +182,65 @@ paths:
       summary: Show
       tags:
       - Member
-  /api/members:
-    get:
+    put:
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Employee Number
+        in: query
+        name: "no"
+        required: true
+        type: string
+      - description: Full Name
+        in: query
+        name: full_name
+        type: string
+      - description: Profile Image
+        in: query
+        name: profile_img
+        required: true
+        type: string
+      - description: Kana Name
+        in: query
+        name: kana_name
+        type: string
+      - description: Employment Start Date
+        in: query
+        name: start_date
+        required: true
+        type: string
+      - description: Emoployment End Date
+        in: query
+        name: end_date
+        required: true
+        type: string
+      - description: Employment Status
+        in: query
+        name: employment_status_id
+        type: integer
+      - description: Status
+        in: query
+        name: status_id
+        type: integer
       produces:
       - application/json
       responses:
-        "200":
-          description: OK
+        "201":
+          description: Created
           schema:
-            items:
-              $ref: '#/definitions/domain.Member'
-            type: array
+            $ref: '#/definitions/domain.Member'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/controller.Error'
         "500":
           description: Internal Server Error
           schema:
             $ref: '#/definitions/controller.Error'
-      summary: Index
+      summary: Update
       tags:
-      - Members
+      - Member
 swagger: "2.0"

@@ -15,6 +15,110 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api/members": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Index",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/domain.Member"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Create",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Employee Number",
+                        "name": "no",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Full Name",
+                        "name": "full_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Profile Image",
+                        "name": "profile_img",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Kana Name",
+                        "name": "kana_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Employment Start Date",
+                        "name": "start_date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Emoployment End Date",
+                        "name": "end_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Employment Status",
+                        "name": "employment_status_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Status",
+                        "name": "status_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/domain.Member"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Error"
+                        }
+                    }
+                }
+            }
+        },
         "/api/members/{id}": {
             "get": {
                 "produces": [
@@ -53,25 +157,119 @@ const docTemplate = `{
                         }
                     }
                 }
-            }
-        },
-        "/api/members": {
-            "get": {
+            },
+            "put": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Members"
+                    "Member"
                 ],
-                "summary": "Index",
+                "summary": "Update",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Employee Number",
+                        "name": "no",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Full Name",
+                        "name": "full_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Profile Image",
+                        "name": "profile_img",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Kana Name",
+                        "name": "kana_name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Employment Start Date",
+                        "name": "start_date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Emoployment End Date",
+                        "name": "end_date",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Employment Status",
+                        "name": "employment_status_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Status",
+                        "name": "status_id",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/domain.Member"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Error"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Member"
+                ],
+                "summary": "Delete",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/domain.Member"
-                            }
+                            "$ref": "#/definitions/domain.Member"
                         }
                     },
                     "500": {
@@ -99,19 +297,16 @@ const docTemplate = `{
         "domain.EmploymentStatus": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "created_at": {
                     "type": "string"
                 },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "employmentStatus": {
+                "employment_status": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -122,28 +317,25 @@ const docTemplate = `{
                 "biography": {
                     "type": "string"
                 },
-                "createdAt": {
+                "created_at": {
                     "type": "string"
                 },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "employmentStatus": {
+                "employment_status": {
                     "$ref": "#/definitions/domain.EmploymentStatus"
                 },
-                "employmentStatusID": {
+                "employment_status_id": {
                     "type": "integer"
                 },
-                "endDate": {
+                "end_date": {
                     "type": "string"
                 },
-                "fullName": {
+                "full_name": {
                     "type": "string"
                 },
                 "id": {
                     "type": "integer"
                 },
-                "kanaName": {
+                "kana_name": {
                     "type": "string"
                 },
                 "motto": {
@@ -152,19 +344,19 @@ const docTemplate = `{
                 "no": {
                     "type": "string"
                 },
-                "profileImg": {
+                "profile_img": {
                     "type": "string"
                 },
-                "startDate": {
+                "start_date": {
                     "type": "string"
                 },
                 "status": {
                     "$ref": "#/definitions/domain.Status"
                 },
-                "statusID": {
+                "status_id": {
                     "type": "integer"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -172,11 +364,8 @@ const docTemplate = `{
         "domain.Status": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "created_at": {
                     "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
                 },
                 "id": {
                     "type": "integer"
@@ -184,20 +373,8 @@ const docTemplate = `{
                 "status": {
                     "type": "string"
                 },
-                "updatedAt": {
+                "updated_at": {
                     "type": "string"
-                }
-            }
-        },
-        "gorm.DeletedAt": {
-            "type": "object",
-            "properties": {
-                "time": {
-                    "type": "string"
-                },
-                "valid": {
-                    "description": "Valid is true if Time is not NULL",
-                    "type": "boolean"
                 }
             }
         }

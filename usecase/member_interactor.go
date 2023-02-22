@@ -15,3 +15,18 @@ func (interactor *MemberInteractor) GetMemberById(id string) (domain.Member, err
 	member, err := interactor.FindById(id)
 	return member, err
 }
+
+func (interactor *MemberInteractor) CreateMember(member domain.Member) (domain.Member, error) {
+	member, err := interactor.New(member)
+	return member, err
+}
+
+func (interactor *MemberInteractor) UpdateMember(member domain.Member) (domain.Member, error) {
+	member, err := interactor.Update(member)
+	return member, err
+}
+
+func (interactor *MemberInteractor) DeleteMemberById(member domain.Member) error {
+	err := interactor.MemberRepository.DeleteById(member)
+	return err
+}
