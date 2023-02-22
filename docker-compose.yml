@@ -10,6 +10,8 @@ services:
       - 3000:3000
     depends_on:
       - db
+    environment:
+      TZ: Asia/Tokyo
     volumes: 
       - .:/go/src/app
 
@@ -24,6 +26,7 @@ services:
       MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: emoshu_practice_dev
+      TZ: Asia/Tokyo
     volumes:
       - db-data:/var/lib/mysql
 
