@@ -85,7 +85,8 @@ func (controller *MemberController) Create(c echo.Context) error {
 	if err := c.Bind(&member); err != nil {
 		c.JSON(500, NewError(500, err))
 	}
-	err := controller.MemberInteractor.CreateMember(member)
+	newMember, err := controller.MemberInteractor.CreateMember(member)
+	member = newMember
 	if err != nil {
 		c.JSON(500, NewError(500, err))
 		return nil
