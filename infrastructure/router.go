@@ -17,11 +17,12 @@ var Router *echo.Echo
 // @license.name               kenshin kawai
 // @host                       localhost:3000
 // @BasePath                   /
-func init() {
+func InitRouter() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	memberController := controller.NewMemberController(InitDB())
+	dbHandler := InitDB()
+	memberController := controller.NewMemberController(dbHandler)
 
 	e.GET("/api/members", memberController.Index)
 	e.GET("/api/members/:id", memberController.Show)

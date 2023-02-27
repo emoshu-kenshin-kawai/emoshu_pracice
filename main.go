@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	infrastructure.InitDB()
+	infrastructure.InitRouter()
 	fmt.Println("heldddlo")
 }
