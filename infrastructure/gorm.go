@@ -3,6 +3,7 @@ package infrastructure
 import (
 	"emoshu_practice/config"
 	"emoshu_practice/domain"
+	"emoshu_practice/interfaces/database"
 	"fmt"
 	"time"
 
@@ -14,12 +15,8 @@ type DBHandler struct {
 	DB *gorm.DB
 }
 
-func InitDB() *gorm.DB {
+func InitDB() database.DBHandler {
 	db := newGorm()
-	err := autoMigrate(db)
-	if err != nil {
-		panic(err)
-	}
 	return db
 }
 
@@ -27,7 +24,39 @@ func (handler *DBHandler) Find(out interface{}, where ...interface{}) *gorm.DB {
 	return handler.DB.Find(out, where...)
 }
 
-func newGorm() *gorm.DB {
+func (handler *DBHandler) First(dest interface{}, conds ...interface{}) *gorm.DB {
+	return handler.DB.First(dest, conds...)
+}
+
+func (handler *DBHandler) Joins(query string, args ...interface{}) *gorm.DB {
+	return handler.DB.Joins(query, args...)
+}
+
+func (handler *DBHandler) Create(value interface{}) *gorm.DB {
+	return handler.DB.Create(value)
+}
+
+func (handler *DBHandler) Save(value interface{}) *gorm.DB {
+	return handler.DB.Save(value)
+}
+
+func (handler *DBHandler) Model(value interface{}) *gorm.DB {
+	return handler.DB.Model(value)
+}
+
+func (handler *DBHandler) Updates(values interface{}) *gorm.DB {
+	return handler.DB.Updates(values)
+}
+
+func (handler *DBHandler) Where(query interface{}, args ...interface{}) *gorm.DB {
+	return handler.DB.Where(query, args...)
+}
+
+func (handler *DBHandler) Delete(value interface{}, conds ...interface{}) *gorm.DB {
+	return handler.DB.Delete(value, conds...)
+}
+
+func newGorm() database.DBHandler {
 	driver := config.Mysql{
 		Host:     config.GetEnvWithDefautl("DB_HOST", "db"),
 		Port:     config.GetEnvWithDefautl("DB_PORT", "3306"),
@@ -37,7 +66,13 @@ func newGorm() *gorm.DB {
 	}
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", driver.UserName, driver.Password, driver.Host, driver.Port, driver.DBName)
 	db := connectDB(dsn)
-	return db
+	err := autoMigrate(db)
+	if err != nil {
+		panic(err)
+	}
+	dbHandler := new(DBHandler)
+	dbHandler.DB = db
+	return dbHandler
 }
 
 func connectDB(dsn string) *gorm.DB {
