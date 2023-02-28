@@ -91,14 +91,28 @@ func TestFindById(t *testing.T) {
 		StartDate:          time.Now(),
 		EndDate:            nil,
 		EmploymentStatusID: 1,
-		StatusID:           1,
+		EmploymentStatus: domain.EmploymentStatus{
+			ID:               0,
+			CreatedAt:        time.Now(),
+			UpdatedAt:        time.Now(),
+			EmploymentStatus: "",
+		},
+		StatusID: 1,
+		Status: domain.Status{
+			ID:        0,
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+			Status:    "",
+		},
 	}
-	rows := sqlmock.NewRows([]string{"id", "no"}).AddRow(member.ID, member.No)
+	rows := sqlmock.
+		NewRows([]string{"id", "no", "profileImg", "fullName", "kanaName", "motto", "biography", "startDate", "endDate", "employmentStatusID", "employmentStatus", "statusID", "status"}).
+		AddRow(member.ID, member.No, member.ProfileImg, member.FullName, member.KanaName, member.Motto, member.Biography, member.StartDate, member.EndDate, member.EmploymentStatusID, member.EmploymentStatus, member.StatusID, member.Status)
 	// mock.ExpectBegin()
 	// mock.ExpectQuery(regexp.QuoteMeta(`INSERT INTO "members" ("id", "no", "profileImg", "fullName", "kanaName", "motto", "biography", "startDate", "endDate") VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`)).WillReturnRows(rows)
 	// mock.ExpectCommit()
 
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT id, no FROM "members" WHERE id = $1`)).WithArgs(member.ID).WillReturnRows(rows)
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "members" WHERE id = $1 ORDER BY "id" LIMIT 1`)).WithArgs(member.ID).WillReturnRows(rows)
 
 	repo := &database.MemberRepository{DBHandler: newDummyHandler(mockDB)}
 	m, err := repo.FindById("1")
@@ -117,3 +131,19 @@ func TestFindById(t *testing.T) {
 	// }
 
 }
+
+// ID                 uint             `gorm:"primarykey" json:"id"`
+// CreatedAt          time.Time        `gorm:"autoCreateTime:milli" json:"created_at"`
+// UpdatedAt          time.Time        `gorm:"autoUpdateTime:milli" json:"updated_at"`
+// No                 string           `json:"no"`
+// ProfileImg         string           `gorm:"not null" json:"profile_img"`
+// FullName           string           `gorm:"not null" json:"full_name"`
+// KanaName           string           `json:"kana_name"`
+// Motto              string           `json:"motto"`
+// Biography          string           `json:"biography"`
+// StartDate          time.Time        `json:"start_date"`
+// EndDate            *time.Time       `json:"end_date"`
+// EmploymentStatusID uint             `json:"employment_status_id"`
+// EmploymentStatus   EmploymentStatus `json:"employment_status"`
+// StatusID           uint             `json:"status_id"`
+// Status             Status           `json:"status"`
